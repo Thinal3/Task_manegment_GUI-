@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
 
-ctk.set_appearance_mode("System")
+ctk.set_appearance_mode("system")
 ctk.set_default_color_theme("blue")
 
 class App(ctk.CTk):# Inherit from CTk main window
@@ -9,20 +9,59 @@ class App(ctk.CTk):# Inherit from CTk main window
     def __init__(self):# create main window
        super().__init__()
        self.title("My Manager")
-       self.geometry("600x600")
+
+       #to open window in center in the screen
+       #get display width and height
+       display_width=self.winfo_screenwidth()
+       display_height=self.winfo_screenheight()
+       #set window width and height
+       win_width=700
+       win_height=500
+       #set top and left
+       left=int(display_width/2-win_width/2)
+       top=int(display_height/2-win_height/2)
+
+       self.geometry(f"{win_width}x{win_height}+{left}+{top}")
+       self.resizable(False, False)
 
        #create frames
-       self.welcome=ctk.CTkFrame(self)
-       self.main_frame=ctk.CTkFrame(self)
+       self.welcome=ctk.CTkFrame(self,fg_color="#0f172a")
+       self.welcome.pack(fill="both", expand=True)
+       #self.main_frame=ctk.CTkFrame(self)
 
        # set up the frames of GUI
        self.setup_welcome()
-       self.setup_mainframe()
+       #self.setup_mainframe()
     
-    def setup_welcome():
+    def setup_welcome(self):
+    
         #create img to welcome frame
-        welcome_img=ctk.CTkImage(light_image=Image.open(""),dark_image=Image.open("img/welcome.png"))
-       
+        welcome_img=ctk.CTkImage(light_image=Image.open("../img/welcome_img.png"),dark_image=Image.open("../img/welcome_img.png"),
+                                 size=(300,500))
+        img_label=ctk.CTkLabel(self.welcome,text="",image=welcome_img)
+        img_label.pack(side="left", anchor="nw")
+        
+        #create label in right conner.
+        welcome_label=ctk.CTkLabel(self.welcome,text="Welcome to My Manager.",text_color="white",fg_color="transparent",
+                                   font=("Arial",28,"bold"),width=300,height=50)
+        welcome_label.place(relx=0.7, rely=0.2, anchor="center")
+
+        note_label=ctk.CTkLabel(self.welcome,
+                                text="  This application helps you stay organized and manage\n your tasks effortlessly.\n"
+                                     "Simply add, view, and organize your tasks to stay\n productive and on top of things.\n\n"
+                                     "Let's get things done with ease and efficiency!",
+                                     text_color="#E5E5FF",fg_color="transparent",font=("Segoe UI", 14,"bold"),
+                                     width=200,height=150)
+        
+        note_label.place(relx=0.7,rely=0.5,anchor="center")
+
+        #create get start button
+        get_start_button=ctk.CTkButton(self.welcome,text="Get started",command="",
+                                       text_color="white",fg_color="transparent",font=("Arial",14),
+                                       corner_radius=10,hover_color="blue",border_width=2,
+                                       border_color="blue",width=140,height=35)
+        get_start_button.place(relx=0.7,rely=0.73,anchor="center")
+
         
 
 
