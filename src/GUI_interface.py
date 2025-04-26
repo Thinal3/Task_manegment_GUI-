@@ -70,6 +70,19 @@ class App(ctk.CTk):# Inherit from CTk main window
         main_img1=ctk.CTkImage(light_image=Image.open("../img/main_frame_img01.jpg"),dark_image=Image.open("../img/main_frame_img01.jpg"),size=(700,80))
         img_label1=ctk.CTkLabel(self.main_frame,text="",image=main_img1)
         img_label1.pack(side="top")
+
+        #add buttons to main frame
+        add_button=ctk.CTkButton(self.main_frame,text=" + ",text_color="white",fg_color="blue",command="",
+                                 font=("Arial",20,"bold"),corner_radius=10,width=30,height=30)
+        add_button.place(relx=0.1,rely=0.2)
+
+        delete_img=ctk.CTkImage(light_image=Image.open("../img/trash_bin.png"),dark_image=Image.open("../img/trash_bin.png"),size=(20,20))
+
+        delete_button=ctk.CTkButton(self.main_frame,text="",image=delete_img,text_color="white",fg_color="red",command="",
+                                corner_radius=10,width=25,height=30)
+        delete_button.place(relx=0.2,rely=0.2)
+
+
     
     
     def show_welcome(self):
