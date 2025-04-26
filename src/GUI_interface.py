@@ -26,8 +26,10 @@ class App(ctk.CTk):# Inherit from CTk main window
 
        #create frames
        self.welcome=ctk.CTkFrame(self,fg_color="#0f172a")
+       self.main_frame=ctk.CTkFrame(self)
+
        self.welcome.pack(fill="both", expand=True)
-       #self.main_frame=ctk.CTkFrame(self)
+       #self.main_frame.pack(fill="both", expand=True)
 
        # set up the frames of GUI
        self.setup_welcome()
@@ -61,8 +63,14 @@ class App(ctk.CTk):# Inherit from CTk main window
                                        corner_radius=10,hover_color="blue",border_width=2,
                                        border_color="blue",width=140,height=35)
         get_start_button.place(relx=0.7,rely=0.73,anchor="center")
+"""
+    def setup_mainframe(self):
 
-        
+        #create image for mainframe
+        main_img1=ctk.CTkImage(light_image=Image.open("../img/main_frame_img01"),dark_image=Image.open("../img/main_frame_img01"),size=(700,50))
+        img_label1=ctk.CTkLabel(self.main_frame,text="",image=main_img1)
+        img_label1.pack(side="top")
+"""    
 
 
 
