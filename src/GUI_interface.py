@@ -74,13 +74,13 @@ class App(ctk.CTk):# Inherit from CTk main window
         #add buttons to main frame
         add_button=ctk.CTkButton(self.main_frame,text=" + ",text_color="white",fg_color="blue",command="",
                                  font=("Arial",20,"bold"),corner_radius=10,width=30,height=30)
-        add_button.place(relx=0.1,rely=0.2)
+        add_button.place(relx=0.12,rely=0.24)
 
         delete_img=ctk.CTkImage(light_image=Image.open("../img/trash_bin.png"),dark_image=Image.open("../img/trash_bin.png"),size=(20,20))
 
         delete_button=ctk.CTkButton(self.main_frame,text="",image=delete_img,text_color="white",fg_color="red",command="",
                                 corner_radius=10,width=25,height=30)
-        delete_button.place(relx=0.2,rely=0.2)
+        delete_button.place(relx=0.2,rely=0.24)
 
 
     
