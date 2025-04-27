@@ -44,9 +44,16 @@ class App(ctk.CTk):# Inherit from CTk main window
         img_label.pack(side="left", anchor="nw")
         
         #create label in right conner.
-        welcome_label=ctk.CTkLabel(self.welcome,text="Welcome to My Manager.",text_color="white",fg_color="transparent",
+        self.welcome_label=ctk.CTkLabel(self.welcome,text="",text_color="white",fg_color="transparent",
                                    font=("Arial",28,"bold"),width=300,height=50)
-        welcome_label.place(relx=0.7, rely=0.2, anchor="center")
+        self.welcome_label.place(relx=0.7, rely=0.2, anchor="center")
+
+        self.full_text = "Welcome to My Manager."
+        self.current_text = ""
+        self.index = 0
+        
+        self.animate_typing()
+
 
         note_label=ctk.CTkLabel(self.welcome,
                                 text="  This application helps you stay organized and manage\n your tasks effortlessly.\n"
@@ -63,6 +70,19 @@ class App(ctk.CTk):# Inherit from CTk main window
                                        corner_radius=10,hover_color="blue",border_width=2,
                                        border_color="blue",width=140,height=35)
         get_start_button.place(relx=0.7,rely=0.73,anchor="center")
+
+
+
+    def animate_typing(self):
+        
+        if self.index < len(self.full_text):
+            
+            self.current_text += self.full_text[self.index]
+            self.welcome_label.configure(text=self.current_text)
+            self.index += 1
+            
+            self.after(180, self.animate_typing)  # Speed of typing (180ms per letter)
+
 
     def setup_mainframe(self):
 
@@ -96,9 +116,10 @@ class App(ctk.CTk):# Inherit from CTk main window
 
 
         #add entry field to search items
-        search_entry=ctk.CTkEntry(self.main_frame,placeholder_text="Search..",placeholder_text_color="white",width=150,height=27)
+        search_entry=ctk.CTkEntry(self.main_frame,placeholder_text="Search with name..",placeholder_text_color="gray",width=150,height=27)
         search_entry.place(relx=0.5,rely=0.25)
 
+        
 
 
 
