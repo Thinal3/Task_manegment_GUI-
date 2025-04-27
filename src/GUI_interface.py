@@ -159,10 +159,26 @@ class App(ctk.CTk):# Inherit from CTk main window
             # Insert each task into the treeview
             my_tree.insert("", "end", values=(task_data["Task name"], task_data["Description"], task_data["Priority"], task_data["Date"]))
 
+        self.style_treeview()
+
         # Pack the Treeview
         my_tree.pack(fill="both", expand=True)
 
 
+    def style_treeview(self):
+        style=ttk.Style()
+
+        style.theme_use("clam")
+
+        style.configure("Treeview.Heading",font("Arial",12,"bold"),
+                        background="#4A90E2", foreground="white",relief="flat")
+        
+        style.configure("Treeview",font=("Arial", 10),
+                        background="#f4f4f4", foreground="black",
+                        rowheight=30,  # Adjust row height
+                        fieldbackground="#f4f4f4")
+
+        style.map("Treeview", background=[('selected', '#3f9dff')])
 
 if __name__=="__main__":
     app=App()
