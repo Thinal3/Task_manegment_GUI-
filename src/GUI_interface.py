@@ -67,20 +67,40 @@ class App(ctk.CTk):# Inherit from CTk main window
     def setup_mainframe(self):
 
         #create image for mainframe
-        main_img1=ctk.CTkImage(light_image=Image.open("../img/main_frame_img01.jpg"),dark_image=Image.open("../img/main_frame_img01.jpg"),size=(700,80))
+        main_img1=ctk.CTkImage(light_image=Image.open("../img/main_frame_img01.png"),dark_image=Image.open("../img/main_frame_img01.png"),size=(700,80))
         img_label1=ctk.CTkLabel(self.main_frame,text="",image=main_img1)
         img_label1.pack(side="top")
 
         #add buttons to main frame
         add_button=ctk.CTkButton(self.main_frame,text=" + ",text_color="white",fg_color="blue",command="",
-                                 font=("Arial",20,"bold"),corner_radius=10,width=30,height=30)
-        add_button.place(relx=0.12,rely=0.24)
+                                 font=("Arial",20,"bold"),corner_radius=10,width=25,height=24)
+        add_button.place(relx=0.12,rely=0.25)
+
 
         delete_img=ctk.CTkImage(light_image=Image.open("../img/trash_bin.png"),dark_image=Image.open("../img/trash_bin.png"),size=(20,20))
-
         delete_button=ctk.CTkButton(self.main_frame,text="",image=delete_img,text_color="white",fg_color="red",command="",
-                                corner_radius=10,width=25,height=30)
-        delete_button.place(relx=0.2,rely=0.24)
+                                corner_radius=10,width=25,height=25)
+        delete_button.place(relx=0.2,rely=0.25)
+
+
+        search_img=ctk.CTkImage(light_image=Image.open("../img/search_img.png"),dark_image=Image.open("../img/search_img.png"),size=(20,20))
+        search_button=ctk.CTkButton(self.main_frame,text="",image=search_img,text_color="white",fg_color="blue",command="",
+                                 font=("Arial",20,"bold"),corner_radius=10,width=25,height=25)
+        search_button.place(relx=0.73,rely=0.25)
+
+
+        reset_img=ctk.CTkImage(light_image=Image.open("../img/reset_img.png"),dark_image=Image.open("../img/reset_img.png"),size=(20,20))
+        reset_button=ctk.CTkButton(self.main_frame,text="",image=reset_img,text_color="white",fg_color="blue",command="",
+                                corner_radius=10,width=25,height=25)
+        reset_button.place(relx=0.8,rely=0.25)
+
+
+        #add entry field to search items
+        search_entry=ctk.CTkEntry(self.main_frame,placeholder_text="Search..",placeholder_text_color="white",width=150,height=27)
+        search_entry.place(relx=0.5,rely=0.25)
+
+
+
 
 
     
@@ -88,6 +108,7 @@ class App(ctk.CTk):# Inherit from CTk main window
     def show_welcome(self):
         self.main_frame.pack_forget()
         self.welcome.pack(fill="both", expand=True)
+
 
     def show_main(self):
         self.welcome.pack_forget()
