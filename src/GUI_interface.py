@@ -2,6 +2,7 @@ import customtkinter as ctk
 import tkinter
 from tkinter import ttk
 from PIL import Image
+from task_manage import Task_manage
 
 ctk.set_appearance_mode("system")
 ctk.set_default_color_theme("blue")
@@ -94,7 +95,7 @@ class App(ctk.CTk):# Inherit from CTk main window
         img_label1.pack(side="top")
 
         #add buttons to main frame
-        add_button=ctk.CTkButton(self.main_frame,text=" + ",text_color="white",fg_color="blue",command="",
+        add_button=ctk.CTkButton(self.main_frame,text=" + ",text_color="white",fg_color="blue",command=self.add_task_window,
                                  font=("Arial",20,"bold"),corner_radius=10,width=25,height=24)
         add_button.place(relx=0.12,rely=0.25)
 
@@ -123,7 +124,6 @@ class App(ctk.CTk):# Inherit from CTk main window
 
 
         #add frame to contain treeview
-        self.tasks_dict={}
         self.table_frame=ctk.CTkFrame(self.main_frame)
         self.table_frame.place(relx=0.12,rely=0.33, relwidth=0.75, relheight=0.5)
         
@@ -139,6 +139,7 @@ class App(ctk.CTk):# Inherit from CTk main window
         self.welcome.pack_forget()
         self.main_frame.pack(fill="both", expand=True)
  
+
     def treeview(self):
         my_tree=ttk.Treeview(self.table_frame,columns=("Task name","Description","Priority","Date"),show="headings")
 
@@ -155,7 +156,7 @@ class App(ctk.CTk):# Inherit from CTk main window
         my_tree.column("Date", width=120,anchor="center")
 
         #insert values 
-        for task_data in self.tasks_dict.items():
+        for task_data in self.Task_manage.tasks_dict.items():
             # Insert each task into the treeview
             my_tree.insert("", "end", values=(task_data["Task name"], task_data["Description"], task_data["Priority"], task_data["Date"]))
 
@@ -180,6 +181,8 @@ class App(ctk.CTk):# Inherit from CTk main window
 
         style.map("Treeview", background=[('selected', '#2563eb')],
                   foreground=[("selected","white")])
+
+
 
 if __name__=="__main__":
     app=App()
