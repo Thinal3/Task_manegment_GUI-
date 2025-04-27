@@ -170,15 +170,16 @@ class App(ctk.CTk):# Inherit from CTk main window
 
         style.theme_use("clam")
 
-        style.configure("Treeview.Heading",font("Arial",12,"bold"),
-                        background="#4A90E2", foreground="white",relief="flat")
+        style.configure("Treeview.Heading",font=("Arial",12,"bold"),
+                        background="#1e3a8a", foreground="white",relief="flat")
         
         style.configure("Treeview",font=("Arial", 10),
-                        background="#f4f4f4", foreground="black",
+                        background="#0f173a", foreground="white",
                         rowheight=30,  # Adjust row height
-                        fieldbackground="#f4f4f4")
+                        fieldbackground="#0f173a")
 
-        style.map("Treeview", background=[('selected', '#3f9dff')])
+        style.map("Treeview", background=[('selected', '#2563eb')],
+                  foreground=[("selected","white")])
 
 if __name__=="__main__":
     app=App()
