@@ -1,4 +1,6 @@
 import customtkinter as ctk
+import tkinter
+from tkinter import ttk
 from PIL import Image
 
 ctk.set_appearance_mode("system")
@@ -65,7 +67,7 @@ class App(ctk.CTk):# Inherit from CTk main window
         note_label.place(relx=0.7,rely=0.5,anchor="center")
 
         #create get start button
-        get_start_button=ctk.CTkButton(self.welcome,text="Get started",command=self.show_main,
+        get_start_button=ctk.CTkButton(self.welcome,text="Start now",command=self.show_main,
                                        text_color="white",fg_color="transparent",font=("Arial",14),
                                        corner_radius=10,hover_color="blue",border_width=2,
                                        border_color="blue",width=140,height=35)
@@ -119,13 +121,15 @@ class App(ctk.CTk):# Inherit from CTk main window
         search_entry=ctk.CTkEntry(self.main_frame,placeholder_text="Search with name..",placeholder_text_color="gray",width=150,height=27)
         search_entry.place(relx=0.5,rely=0.25)
 
+
+        #add frame to contain treeview
+        self.tasks_dict={}
+        self.table_frame=ctk.CTkFrame(self.main_frame)
+        self.table_frame.place(relx=0.12,rely=0.33, relwidth=0.75, relheight=0.5)
         
+        self.treeview()
 
 
-
-
-    
-    
     def show_welcome(self):
         self.main_frame.pack_forget()
         self.welcome.pack(fill="both", expand=True)
@@ -135,9 +139,28 @@ class App(ctk.CTk):# Inherit from CTk main window
         self.welcome.pack_forget()
         self.main_frame.pack(fill="both", expand=True)
  
+    def treeview(self):
+        my_tree=ttk.Treeview(self.table_frame,columns=("Task name","Description","Priority","Date"),show="headings")
 
+        #headings
+        my_tree.heading("Task name",text="Task name")
+        my_tree.heading("Description",text="Description")
+        my_tree.heading("Priority",text="Priority")
+        my_tree.heading("Date",text="Date")
 
+        #column width
+        my_tree.column("Task name", width=150,anchor="center")
+        my_tree.column("Description", width=250,anchor="center")
+        my_tree.column("Priority", width=100,anchor="center")
+        my_tree.column("Date", width=120,anchor="center")
 
+        #insert values 
+        for task_data in self.tasks_dict.items():
+            # Insert each task into the treeview
+            my_tree.insert("", "end", values=(task_data["Task name"], task_data["Description"], task_data["Priority"], task_data["Date"]))
+
+        # Pack the Treeview
+        my_tree.pack(fill="both", expand=True)
 
 
 
