@@ -6,7 +6,7 @@ class Task_manage:
         self.load_file()
 
     def add_task(self,name,description,priority,date):
-        task_id=len(self.tasks_dict)+1
+        task_id=str(len(self.tasks_dict) + 1)
         
         self.tasks_dict[task_id]={
             "task_name":name,
