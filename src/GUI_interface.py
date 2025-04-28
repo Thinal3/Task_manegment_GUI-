@@ -174,9 +174,9 @@ class App(ctk.CTk):# Inherit from CTk main window
         for row in self.my_tree.get_children():
             self.my_tree.delete(row)
         
-        for task_data in self.Task_manage.tasks_dict.items():
+        for task_id, task_data in self.Task_manage.tasks_dict.items():
             # Insert each task into the treeview
-            self.my_tree.insert("", "end", values=(task_data["Task name"], task_data["Description"], task_data["Priority"], task_data["Date"]))
+            self.my_tree.insert("", "end", values=(task_data["task_name"], task_data["description"], task_data["priority"], task_data["date"]))
 
 
 

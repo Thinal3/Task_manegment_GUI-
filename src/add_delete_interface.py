@@ -74,7 +74,7 @@ class Sub_interface:
         name=self.name_entry.get()
         des=self.des_textbox.get("1.0", "end-1c")
         priority=self.priority_combo.get()
-        date=self.calendar.get()
+        date=self.calendar.get_date()
 
         #add task to task manage
         self.Task_manage.add_task(name,des,priority,date)
