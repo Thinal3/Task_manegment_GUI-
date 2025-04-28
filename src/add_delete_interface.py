@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkcalendar import Calendar
+from CTkMessagebox import CTkMessagebox
 
 class Sub_interface:
     def __init__(self,parent,Task_manage,refresh_tasks):
@@ -73,8 +74,16 @@ class Sub_interface:
     def get_task(self):
         name=self.name_entry.get()
         des=self.des_textbox.get("1.0", "end-1c")
+        
+        if not des:
+            des="Didn't mention."
+
         priority=self.priority_combo.get()
         date=self.calendar.get_date()
+
+        if not name:
+            CTkMessagebox(title="Warning", message="Task Name cannot be empty!", icon="warning",width=300,height=150)
+            return  # Stop here, don't save if empty
 
         #add task to task manage
         self.Task_manage.add_task(name,des,priority,date)
@@ -85,6 +94,50 @@ class Sub_interface:
         #add task to treeview
         self.refresh_tasks()
 
+    def delete_task_interface(self,treeview):
+        selected_items=treeview.selection()
+
+        if selected_items:
+            self.confirm_win=ctk.CTkToplevel(self.parent,fg_color="#0f172a")
+            self.confirm_win.title("Confirmation.")
+
+            #to open window in center in the screen
+            #get display width and height
+            display_width=self.confirm_win.winfo_screenwidth()
+            display_height=self.confirm_win.winfo_screenheight()
+        
+            #set window width and height
+            win_width=300
+            win_height=150
+            #set top and left
+            left=int(display_width/2-win_width/2)+20
+            top=int(display_height/2-win_height/2)+50
+
+            self.confirm_win.geometry(f"{win_width}x{win_height}+{left}+{top}")
+            self.confirm_win.grab_set()
+
+            message = ctk.CTkLabel(self.confirm_win, text="Are you sure you want to delete?")
+            message.pack(pady=20)
+
+            confirm_button = ctk.CTkButton(self.confirm_win, text="Delete", command=lambda: self.delete_task(treeview, selected_items))
+            confirm_button.pack(pady=10)
+
+
+    def delete_task(self, treeview, selected_items):
+
+        for selected_item in selected_items:
+            task_id = selected_item  # Task ID from Treeview
+
+            # Delete task from tasks_dict using task ID
+            if task_id in self.Task_manage.tasks_dict:
+                del self.Task_manage.tasks_dict[task_id]  # Remove task from the dict
+                self.Task_manage.save_file()  # Save changes to file
+
+            # Delete task from Treeview
+            treeview.delete(selected_item)
+
+        self.refresh_tasks()  
+        self.confirm_win.destroy() 
 
 
 

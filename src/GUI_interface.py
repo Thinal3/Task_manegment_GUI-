@@ -106,7 +106,7 @@ class App(ctk.CTk):# Inherit from CTk main window
 
 
         delete_img=ctk.CTkImage(light_image=Image.open("../img/trash_bin.png"),dark_image=Image.open("../img/trash_bin.png"),size=(20,20))
-        delete_button=ctk.CTkButton(self.main_frame,text="",image=delete_img,text_color="white",fg_color="red",command="",
+        delete_button=ctk.CTkButton(self.main_frame,text="",image=delete_img,text_color="white",fg_color="red",command=lambda:self.sub_interface.delete_task_interface(self.my_tree),
                                 corner_radius=10,width=25,height=25)
         delete_button.place(relx=0.2,rely=0.25)
 
@@ -176,7 +176,7 @@ class App(ctk.CTk):# Inherit from CTk main window
         
         for task_id, task_data in self.Task_manage.tasks_dict.items():
             # Insert each task into the treeview
-            self.my_tree.insert("", "end", values=(task_data["task_name"], task_data["description"], task_data["priority"], task_data["date"]))
+            self.my_tree.insert("", "end",iid=task_id, values=(task_data["task_name"], task_data["description"], task_data["priority"], task_data["date"]))
 
 
 
