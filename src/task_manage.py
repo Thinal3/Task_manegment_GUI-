@@ -17,9 +17,12 @@ class Task_manage:
         self.save_file()
     
     def load_file(self):
-        with open("tasks.json","r") as file:
-            self.tasks_dict=json.load(file)
-        
+        try:
+            with open("tasks.json","r") as file:
+                self.tasks_dict=json.load(file)
+        except FileNotFoundError:
+            self.tasks_dict={}
+            
     def save_file(self):
         with open("tasks.json", "w") as file:
             json.dump(self.tasks_dict, file, indent=4)

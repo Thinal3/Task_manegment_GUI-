@@ -13,6 +13,8 @@ class App(ctk.CTk):# Inherit from CTk main window
        super().__init__()
        self.title("My Manager")
 
+       self.Task_manage=Task_manage()
+
        #to open window in center in the screen
        #get display width and height
        display_width=self.winfo_screenwidth()
@@ -95,7 +97,7 @@ class App(ctk.CTk):# Inherit from CTk main window
         img_label1.pack(side="top")
 
         #add buttons to main frame
-        add_button=ctk.CTkButton(self.main_frame,text=" + ",text_color="white",fg_color="blue",command=self.add_task_window,
+        add_button=ctk.CTkButton(self.main_frame,text=" + ",text_color="white",fg_color="blue",command="self.add_task_window",
                                  font=("Arial",20,"bold"),corner_radius=10,width=25,height=24)
         add_button.place(relx=0.12,rely=0.25)
 
