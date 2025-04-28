@@ -3,6 +3,7 @@ import tkinter
 from tkinter import ttk
 from PIL import Image
 from task_manage import Task_manage
+from add_delete_interface import Sub_interface
 
 ctk.set_appearance_mode("system")
 ctk.set_default_color_theme("blue")
@@ -12,8 +13,6 @@ class App(ctk.CTk):# Inherit from CTk main window
     def __init__(self):# create main window
        super().__init__()
        self.title("My Manager")
-
-       self.Task_manage=Task_manage()
 
        #to open window in center in the screen
        #get display width and height
@@ -32,6 +31,10 @@ class App(ctk.CTk):# Inherit from CTk main window
        #create frames
        self.welcome=ctk.CTkFrame(self,fg_color="#0f172a")
        self.main_frame=ctk.CTkFrame(self,fg_color="#0f172a")
+
+       # create object instance
+       self.Task_manage=Task_manage()
+       self.sub_interface=Sub_interface(self.main_frame,self.Task_manage,self.refresh_tasks)
 
        # set up the frames of GUI
        self.setup_welcome()
@@ -97,7 +100,7 @@ class App(ctk.CTk):# Inherit from CTk main window
         img_label1.pack(side="top")
 
         #add buttons to main frame
-        add_button=ctk.CTkButton(self.main_frame,text=" + ",text_color="white",fg_color="blue",command="self.add_task_window",
+        add_button=ctk.CTkButton(self.main_frame,text=" + ",text_color="white",fg_color="blue",command=self.sub_interface.add_task_interface,
                                  font=("Arial",20,"bold"),corner_radius=10,width=25,height=24)
         add_button.place(relx=0.12,rely=0.25)
 
@@ -115,7 +118,7 @@ class App(ctk.CTk):# Inherit from CTk main window
 
 
         reset_img=ctk.CTkImage(light_image=Image.open("../img/reset_img.png"),dark_image=Image.open("../img/reset_img.png"),size=(20,20))
-        reset_button=ctk.CTkButton(self.main_frame,text="",image=reset_img,text_color="white",fg_color="blue",command="",
+        reset_button=ctk.CTkButton(self.main_frame,text="",image=reset_img,text_color="white",fg_color="blue",command=self.refresh_tasks,
                                 corner_radius=10,width=25,height=25)
         reset_button.place(relx=0.8,rely=0.25)
 
@@ -143,29 +146,38 @@ class App(ctk.CTk):# Inherit from CTk main window
  
 
     def treeview(self):
-        my_tree=ttk.Treeview(self.table_frame,columns=("Task name","Description","Priority","Date"),show="headings")
+        self.my_tree=ttk.Treeview(self.table_frame,columns=("Task name","Description","Priority","Date"),show="headings")
 
         #headings
-        my_tree.heading("Task name",text="Task name")
-        my_tree.heading("Description",text="Description")
-        my_tree.heading("Priority",text="Priority")
-        my_tree.heading("Date",text="Date")
+        self.my_tree.heading("Task name",text="Task name")
+        self.my_tree.heading("Description",text="Description")
+        self.my_tree.heading("Priority",text="Priority")
+        self.my_tree.heading("Date",text="Date")
 
         #column width
-        my_tree.column("Task name", width=150,anchor="center")
-        my_tree.column("Description", width=250,anchor="center")
-        my_tree.column("Priority", width=100,anchor="center")
-        my_tree.column("Date", width=120,anchor="center")
+        self.my_tree.column("Task name", width=150,anchor="center")
+        self.my_tree.column("Description", width=250,anchor="center")
+        self.my_tree.column("Priority", width=100,anchor="center")
+        self.my_tree.column("Date", width=120,anchor="center")
 
         #insert values 
-        for task_data in self.Task_manage.tasks_dict.items():
-            # Insert each task into the treeview
-            my_tree.insert("", "end", values=(task_data["Task name"], task_data["Description"], task_data["Priority"], task_data["Date"]))
+        self.refresh_tasks()
 
+        #style the treeview
         self.style_treeview()
 
         # Pack the Treeview
-        my_tree.pack(fill="both", expand=True)
+        self.my_tree.pack(fill="both", expand=True)
+
+    
+    def refresh_tasks(self):
+        for row in self.my_tree.get_children():
+            self.my_tree.delete(row)
+        
+        for task_data in self.Task_manage.tasks_dict.items():
+            # Insert each task into the treeview
+            self.my_tree.insert("", "end", values=(task_data["Task name"], task_data["Description"], task_data["Priority"], task_data["Date"]))
+
 
 
     def style_treeview(self):
@@ -183,7 +195,6 @@ class App(ctk.CTk):# Inherit from CTk main window
 
         style.map("Treeview", background=[('selected', '#2563eb')],
                   foreground=[("selected","white")])
-
 
 
 if __name__=="__main__":
