@@ -112,20 +112,20 @@ class App(ctk.CTk):# Inherit from CTk main window
 
 
         search_img=ctk.CTkImage(light_image=Image.open("../img/search_img.png"),dark_image=Image.open("../img/search_img.png"),size=(20,20))
-        search_button=ctk.CTkButton(self.main_frame,text="",image=search_img,text_color="white",fg_color="blue",command="",
+        search_button=ctk.CTkButton(self.main_frame,text="",image=search_img,text_color="white",fg_color="blue",command=self.search_task,
                                  font=("Arial",20,"bold"),corner_radius=10,width=25,height=25)
         search_button.place(relx=0.73,rely=0.25)
 
 
         reset_img=ctk.CTkImage(light_image=Image.open("../img/reset_img.png"),dark_image=Image.open("../img/reset_img.png"),size=(20,20))
-        reset_button=ctk.CTkButton(self.main_frame,text="",image=reset_img,text_color="white",fg_color="blue",command=self.refresh_tasks,
+        reset_button=ctk.CTkButton(self.main_frame,text="",image=reset_img,text_color="white",fg_color="blue",command=self.cleaning_search,
                                 corner_radius=10,width=25,height=25)
         reset_button.place(relx=0.8,rely=0.25)
 
 
         #add entry field to search items
-        search_entry=ctk.CTkEntry(self.main_frame,placeholder_text="Search with name..",placeholder_text_color="gray",width=150,height=27)
-        search_entry.place(relx=0.5,rely=0.25)
+        self.search_entry=ctk.CTkEntry(self.main_frame,placeholder_text="Search with name..",placeholder_text_color="gray",width=150,height=27)
+        self.search_entry.place(relx=0.5,rely=0.25)
 
 
         #add frame to contain treeview
@@ -188,13 +188,34 @@ class App(ctk.CTk):# Inherit from CTk main window
         style.configure("Treeview.Heading",font=("Arial",12,"bold"),
                         background="#1e3a8a", foreground="white",relief="flat")
         
-        style.configure("Treeview",font=("Arial", 10),
+        style.configure("Treeview",font=("Arial", 14),
                         background="#0f173a", foreground="white",
-                        rowheight=30,  # Adjust row height
+                        rowheight=35,  # Adjust row height
                         fieldbackground="#0f173a")
 
         style.map("Treeview", background=[('selected', '#2563eb')],
                   foreground=[("selected","white")])
+
+    def search_task(self):
+        filter_list=[]
+
+        search_item=self.search_entry.get().lower()
+
+        for task_id,task_data in self.Task_manage.tasks_dict.items():
+            if search_item in task_data["task_name"]:
+                filter_list.append(task_id)
+
+        for item in self.my_tree.get_children():
+            self.my_tree.delete(item)
+
+        for task_id in filter_list:
+            task=self.Task_manage.tasks_dict[task_id]
+            self.my_tree.insert("", "end",iid=task_id, values=(task["task_name"], task["description"], task["priority"], task["date"]))
+
+
+    def cleaning_search(self):
+        self.search_entry.delete(0, ctk.END)
+        self.refresh_tasks()
 
 
 if __name__=="__main__":
