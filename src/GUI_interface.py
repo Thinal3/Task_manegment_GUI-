@@ -217,8 +217,3 @@ class App(ctk.CTk):# Inherit from CTk main window
         self.search_entry.delete(0, ctk.END)
         self.refresh_tasks()
 
-
-if __name__=="__main__":
-    app=App()
-    app.mainloop()
-
